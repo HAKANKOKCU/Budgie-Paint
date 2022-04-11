@@ -132,6 +132,7 @@ html,body {
 }
 #sz {
   height: 200px;
+  width: 100%;
   overflow: auto;
 }
 .unselectable {
