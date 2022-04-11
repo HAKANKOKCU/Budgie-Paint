@@ -33,30 +33,42 @@ html,body {
   align-items: center;
   z-index: 2;
   padding-top: 15px;
+  overflow: auto;
 }
-.rightBar > button {
+.rightBar button {
   border:none;
   background-color: transparent;
   border-radius: 50%;
 }
-.rightBar > button:hover {
+.rightBar button:hover {
   background-color: rgba(0,0,0,0.2)
 }
-.rightBar > button:active {
+.rightBar button:active {
   background-color: rgba(0,0,0,0.4)
 }
 .titleBar > h1 {
   margin: 0;
 }
-.titleBar > button {
+.titleBar button {
   border:none;
   background-color: transparent;
   border-radius: 50%;
 }
-.titleBar > button:hover {
+.titleBar button:hover {
   background-color: rgba(0,0,0,0.2)
 }
-.titleBar > button:active {
+.titleBar button:active {
+  background-color: rgba(0,0,0,0.4)
+}
+.mnbtn {
+  border:none;
+  background-color: transparent;
+  border-radius: 50%;
+}
+.mnbtn:hover {
+  background-color: rgba(0,0,0,0.2)
+}
+.mnbtn:active {
   background-color: rgba(0,0,0,0.4)
 }
 .sepH {
@@ -100,7 +112,7 @@ html,body {
 }
 
 @-webkit-keyframes fadein {
-  from {bottom: 0; opacity: 0;} 
+  from {bottom: 0; opacity: 0;}
   to {bottom: 30px; opacity: 1;}
 }
 
@@ -110,11 +122,18 @@ html,body {
 }
 
 @-webkit-keyframes fadeout {
-  from {bottom: 30px; opacity: 1;} 
+  from {bottom: 30px; opacity: 1;}
   to {bottom: 0; opacity: 0;}
 }
 
 @keyframes fadeout {
   from {bottom: 30px; opacity: 1;}
   to {bottom: 0; opacity: 0;}
+}
+#sz {
+  height: 200px;
+  overflow: auto;
+}
+.unselectable {
+   user-select: none;
 }
