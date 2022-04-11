@@ -15,22 +15,22 @@
 
 		/* Track */
 		::-webkit-scrollbar-track {
-			background: #f1f1f1; 
+			background: #f1f1f1;
 		}
- 
+
 		/* Handle */
 		::-webkit-scrollbar-thumb {
-			background: #888; 
+			background: #888;
 		}
 
 		/* Handle on hover */
 		::-webkit-scrollbar-thumb:hover {
-			background: #555; 
+			background: #555;
 		}
 </style>
     <link rel="stylesheet" href="index.css">
   </head>
-  <body>
+  <body class="unselectable" onmouseup="up()">
     <!--<h1>Hello World!</h1>
     We are using Node.js <span id="node-version"></span>,
     Chromium <span id="chrome-version"></span>,
@@ -42,8 +42,10 @@
       <button style="width:35px;height:35px" onclick="save()"><img src="download.svg" width="15px"></button>
     </div>
     <div class="rightBar">
+      <input type="color" class="mnbtn" style="width:40px;height:40px;border-radius:5px" id="dcolor"/>
       <button style="width:35px;height:35px"><img src="pen.svg" width="15px"></button>
-      <button style="width:35px;height:35px"><img src="circle-fill.svg" width="15px"></button>
+      <button style="width:35px;height:35px" onclick="toglevisi('sz')"><img src="circle-fill.svg" width="15px"></button>
+      <div id="sz" style="display:none"></div>
 	  <button style="width:35px;height:35px" onclick="setSize()"><img src="arrows-move.svg" width="15px"></button>
 	  <button style="width:35px;height:35px" onclick="clearAll()"><img src="trash-fill.svg" width="15px"></button>
     </div>
