@@ -1,0 +1,20 @@
+{
+  "name": "budgie-paint",
+  "version": "1.0.0",
+  "description": "Budgie Drawing App",
+  "main": "main.js",
+  "dependencies": {
+    "electron": "^18.0.1",
+    "electron-winstaller": "^5.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start":"electron ."
+  },
+  "keywords": [
+    "paint",
+    "draw"
+  ],
+  "author": "HAKANKOKCU",
+  "license": "ISC"
+}
