@@ -13,23 +13,32 @@ ctx.lineWidth = 6;
 function down() {isdrawing = true}
 function up() {isdrawing = false}
 function move(e) {
+  var tchx;
+  var tchy;
+  try {
+    tchx = e.offsetX;
+    tchy = e.offsetY
+  }catch {
+    tchx = event.touches[0].clientX;
+    tchy = event.touches[0].clientY;
+  }
   if (isdrawing) {
     ctx.fillStyle = document.getElementById("dcolor").value;
     ctx.strokeStyle = document.getElementById("dcolor").value;
     console.log(document.getElementById("dcolor").value)
     ctx.beginPath();
-    ctx.arc(e.offsetX * 3,e.offsetY * 3,ctx.lineWidth / 2,0,2*Math.PI,false);
+    ctx.arc(tchx * 3,tchy * 3,ctx.lineWidth / 2,0,2*Math.PI,false);
     ctx.fill();
     ctx.beginPath();
     ctx.arc(oldx,oldy ,ctx.lineWidth / 2,0,2*Math.PI,false);
     ctx.fill();
 	  ctx.beginPath();
 	  ctx.moveTo(oldx, oldy);
-	  ctx.lineTo(e.offsetX * 3, e.offsetY * 3);
+	  ctx.lineTo(tchx * 3, tchy * 3);
 	  ctx.stroke();
   }
-  oldx = e.offsetX * 3;
-  oldy = e.offsetY * 3
+  oldx = tchx * 3;
+  oldy = tchy * 3
 }
 function setSize() {
   draw.width = window.innerWidth * 3;
@@ -66,13 +75,21 @@ function toglevisi(elementID) {
     element.style.display = "block"
   }
 }
+function togleheg(elementID,heig) {
+  var element = document.getElementById(elementID)
+  if (element.style.height === heig) {
+    element.style.height = "0";
+  }else {
+    element.style.height = heig;
+  }
+}
 for (let i = 1; i < 201; i++) {
   var btn = document.createElement("button")
   btn.innerText = i;
   btn.style.borderRadius = "5px";
   btn.style.width = "100%";
   btn.onclick = function () {
-    toglevisi("sz");
+    togleheg("sz","200px");
     ctx.lineWidth = i * 3;
   };
   document.getElementById("sz").appendChild(btn)
