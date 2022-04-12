@@ -34,6 +34,7 @@ html,body {
   z-index: 2;
   padding-top: 15px;
   overflow: auto;
+  justify-content: center;
 }
 .rightBar button {
   border:none;
@@ -134,7 +135,8 @@ html,body {
   height: 200px;
   width: 100%;
   overflow: auto;
-  background-color: rgba(255,255,255,0.5)
+  background-color: rgba(255,255,255,0.5);
+  transition: height 0.4s;
 }
 .unselectable {
    user-select: none;
