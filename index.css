@@ -39,13 +39,14 @@ html,body {
 .rightBar button {
   border:none;
   background-color: transparent;
-  border-radius: 50%;
+  border-radius: 5px;
+  flex: 1
 }
 .rightBar button:hover {
-  background-color: rgba(255,200,0,0.2)
+  background-color: rgba(255,200,0,0.4)
 }
 .rightBar button:active {
-  background-color: rgba(255,200,0,0.4)
+  background-color: rgba(255,200,0,0.6)
 }
 .titleBar > h1 {
   margin: 0;
@@ -56,10 +57,10 @@ html,body {
   border-radius: 50%;
 }
 .titleBar button:hover {
-  background-color: rgba(255,200,0,0.2)
+  background-color: rgba(255,200,0,0.4)
 }
 .titleBar button:active {
-  background-color: rgba(255,200,0,0.4)
+  background-color: rgba(255,200,0,0.6)
 }
 .mnbtn {
   border:none;
@@ -67,10 +68,10 @@ html,body {
   border-radius: 50%;
 }
 .mnbtn:hover {
-  background-color: rgba(255,200,0,0.2)
+  background-color: rgba(255,200,0,0.4)
 }
 .mnbtn:active {
-  background-color: rgba(255,200,0,0.4)
+  background-color: rgba(255,200,0,0.6)
 }
 .sepH {
   width: 1px;
@@ -97,7 +98,7 @@ html,body {
   background-color: #333;
   color: #fff;
   text-align: center;
-  border-radius: 2px;
+  border-radius: 5px;
   padding: 16px;
   position: fixed;
   z-index: 1;
