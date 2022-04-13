@@ -71,7 +71,7 @@
     </div>
     <div class="main">
       <canvas id="draw" onmousedown="down()" onmouseup="up()" onmousemove="move(event)"
-      ontouchstart="down()" ontouchend="up()" ontouchmove="move(event)"></canvas>
+      ontouchstart="down();e.preventDefault()" ontouchend="up()" ontouchmove="move(event);e.preventDefault()"></canvas>
     </div>
 	<div id="snackbar">Saving..</div>
   </body>
