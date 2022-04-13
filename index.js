@@ -3,6 +3,9 @@ var draw = document.getElementById("draw");
 var ctx = draw.getContext("2d");
 var oldx,oldy;
 var selectedSize = 2;
+var acts = [];
+var actlg = [];
+var as = 0;
 draw.width = window.innerWidth * 3;
 draw.height = window.innerHeight * 3;
 draw.style.width = window.innerWidth + "px";
@@ -12,7 +15,7 @@ ctx.fillRect(0, 0, draw.width, draw.height);
 ctx.fillStyle = document.getElementById("dcolor").value;
 ctx.lineWidth = 6;
 function down() {isdrawing = true}
-function up() {isdrawing = false;draw.style.touchAction = "";}
+function up() {isdrawing = false;draw.style.touchAction = "";actlg.push(as);as = 0;}
 function move(e) {
   var tchx;
   var tchy;
@@ -38,9 +41,37 @@ function move(e) {
 	  ctx.moveTo(oldx, oldy);
 	  ctx.lineTo(tchx * 3, tchy * 3);
 	  ctx.stroke();
+    as++;
+    acts.push([0,ctx.fillStyle,ctx.lineWidth,oldx,oldy,tchx * 3,tchy * 3])
   }
   oldx = tchx * 3;
   oldy = tchy * 3
+}
+async function undo() {
+  ctx.clearRect(0, 0, draw.width, draw.height);
+	ctx.fillStyle = "white";
+	ctx.fillRect(0, 0, draw.width, draw.height);
+	ctx.fillStyle = "black";
+  acts.splice(acts.length - 1,1);
+  actlg.splice(acts.length - 1,1);
+  for (let i = 0; i < acts.length; i++) {
+    ctx.fillStyle = acts[i][1];
+    ctx.strokeStyle = acts[i][1];
+    ctx.lineWidth = acts[i][2]
+    if (acts[i][0] === 0) {
+      ctx.beginPath();
+      ctx.arc(acts[i][5],acts[i][6],acts[i][2] / 2,0,2*Math.PI,false);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(acts[i][3],acts[i][4] ,acts[i][2] / 2,0,2*Math.PI,false);
+      ctx.fill();
+  	  ctx.beginPath();
+  	  ctx.moveTo(acts[i][3], acts[i][4]);
+  	  ctx.lineTo(acts[i][5], acts[i][6]);
+  	  ctx.stroke();
+    }
+  }
+  ctx.lineWidth = selectedSize * 3
 }
 function setSize() {
   draw.width = window.innerWidth * 3;
@@ -115,6 +146,7 @@ for (let i = 1; i < 201; i++) {
     this.style.position = "sticky";
     this.style.top = "0";
     this.style.bottom = "0";
+    document.getElementById("sizz").innerText = i;
   };
   if (i === 2) {
     btn.style.backgroundColor = "orange";
@@ -133,7 +165,7 @@ async function themeInit() {
 		document.getElementById("rbar").style.color = "white";
 		document.getElementById("sz").style.color = "white";
 		document.body.style.backgroundColor = "#6f6f6f";
-		const nodeList = document.querySelectorAll("svg");
+		const nodeList = document.querySelectorAll("svg,p");
 		for (let i = 0; i < nodeList.length; i++) {
 			nodeList[i].style.color = "orange";
 		}
@@ -145,7 +177,7 @@ async function themeInit() {
 		document.getElementById("rbar").style.color = "black";
 		document.getElementById("sz").style.color = "black";
 		document.body.style.backgroundColor = "#f4f4f4";
-		const nodeList = document.querySelectorAll("svg");
+		const nodeList = document.querySelectorAll("svg,p");
 		for (let i = 0; i < nodeList.length; i++) {
 			nodeList[i].style.color = "black";
 		}
@@ -159,4 +191,17 @@ function nightToggle() {
 		localStorage.setItem("night","on")
 	}
 	themeInit();
+}
+function asyncfor(start,end,step,importedvar,func,speed) {
+    var stp = start;
+    var asyncforr = setInterval(function() {
+        func(stp,importedvar);
+        if (stp > end) {
+            clearInterval(asyncforr);
+        }
+        if (stp === end) {
+            clearInterval(asyncforr);
+        }
+        stp += step;
+    },speed);
 }

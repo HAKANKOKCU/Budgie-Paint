@@ -40,7 +40,8 @@ html,body {
   border:none;
   background-color: transparent;
   border-radius: 5px;
-  flex: 1
+  flex: 1;
+  overflow: hidden;
 }
 .rightBar button:hover {
   background-color: rgba(255,200,0,0.4)
@@ -146,3 +147,4 @@ svg {
 	margin-top:2.5px;
 	margin-left:1px;
 }
+canvas {box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)}
