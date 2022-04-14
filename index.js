@@ -78,9 +78,7 @@ function setSize() {
 	draw.height = window.innerHeight * 3;
 	draw.style.width = window.innerWidth + "px";
 	draw.style.height = window.innerHeight + "px";
-	ctx.fillStyle = "white";
-	ctx.fillRect(0, 0, draw.width, draw.height);
-	ctx.fillStyle = document.getElementById("dcolor").value;
+	clearAll();
   ctx.lineWidth = selectedSize * 3;
 }
 function save() {
@@ -100,6 +98,8 @@ function clearAll() {
 	ctx.fillStyle = "white";
 	ctx.fillRect(0, 0, draw.width, draw.height);
 	ctx.fillStyle = "black";
+	acts = [];
+	actlg = [];
 }
 function toglevisi(elementID) {
   var element = document.getElementById(elementID)
