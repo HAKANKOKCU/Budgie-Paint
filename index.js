@@ -17,18 +17,35 @@ ctx.fillStyle = "white";
 ctx.fillRect(0, 0, draw.width, draw.height);
 ctx.fillStyle = document.getElementById("dcolor").value;
 ctx.lineWidth = 6;
-function down() {isdrawing = true}
+function down(e,type) {isdrawing = true;
+  if (type === "m") {
+    oldx = e.offsetX * 3;
+    oldy = e.offsetY * 3;
+  }else {
+    var evt = (typeof e.originalEvent === 'undefined') ? e : e.originalEvent;
+    var touch = evt.touches[0] || evt.changedTouches[0];
+    oldx = (touch.clientX - 10 - document.documentElement.scrollLeft + document.getElementById("man").scrollLeft) * 3;
+    oldy = (touch.clientY - 50 -document.documentElement.scrollTop +document.getElementById("man").scrollTop) * 3;
+    //draw.style.touchAction = "none";
+    //console.log("touch")
+    //console.log(touch.offsetX,touch.pageX)
+  }
+}
 function up() {isdrawing = false;draw.style.touchAction = "";actlg.push(as);as = 0;}
-function move(e) {
+function move(e,type) {
   var tchx;
   var tchy;
-  try {
+  if (type === "m") {
     tchx = e.offsetX;
     tchy = e.offsetY;
-  }catch {
-    tchx = event.touches[0].clientX;
-    tchy = event.touches[0].clientY;
-    draw.style.touchAction = "none";
+  }else {
+    var evt = (typeof e.originalEvent === 'undefined') ? e : e.originalEvent;
+    var touch = evt.touches[0] || evt.changedTouches[0];
+    tchx = touch.clientX - 10 - document.documentElement.scrollLeft + document.getElementById("man").scrollLeft;
+    tchy = touch.clientY - 50 -document.documentElement.scrollTop +document.getElementById("man").scrollTop;
+    //draw.style.touchAction = "none";
+    //console.log("touch")
+    //console.log(touch.offsetX,touch.pageX)
   }
   if (isdrawing) {
     ctx.fillStyle = document.getElementById("dcolor").value;
@@ -47,6 +64,7 @@ function move(e) {
     as++;
     acts.push([0,ctx.fillStyle,ctx.lineWidth,oldx,oldy,tchx * 3,tchy * 3])
   }
+  //console.log(tchx)
   oldx = tchx * 3;
   oldy = tchy * 3
 }
@@ -239,3 +257,17 @@ function addcolor(i,clrlist) {
 }
 asyncfor(0,colors.length - 1,1,colors,addcolor,10)
 hidepane();
+//function componentToHex(c) {
+//  let hex = c.toString(16);
+//  return hex.length == 1 ? "0" + hex : hex;
+//}
+//function rgbToHex(r, g, b) {
+//  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+//}
+//function rbcolor() {
+//  var red = document.getElementById("redval").value;
+//  var green = document.getElementById("greenval").value;
+//  var blue = document.getElementById("blueval").value;
+//  document.getElementById("dcolor").value = rgbToHex(red,green,blue)
+//  return rgbToHex(red,green,blue)
+//}

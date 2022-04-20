@@ -160,9 +160,43 @@ canvas {box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0
   padding: 8px;
   overflow: auto;
 }
+@media screen and (max-width: 400px) {
+  .rightpane {
+    width: calc(100% - 40px);
+  }
+}
 panecnt {
   display: none;
 }
 .obtn {border:none;background: transparent}
 .obtn:hover {opacity: 0.7}
 .obtn:active {opacity: 0.5}
+.slider {
+  -webkit-appearance: none;
+  height: 10px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: orange;
+  cursor: pointer;
+  border:none
+}
+
+.slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: orange;
+  cursor: pointer;
+  border:none
+}

@@ -55,6 +55,10 @@
     <div class="rightpane" id="rpane">
       <button onclick="hidepane()" class="mnbtn" style="border-radius:5px;float:right"><p style="margin:0;padding:0;">Close</p></button>
       <panecnt id="pane_clrlist">
+        <!--<p>RGB Value</p>
+        Red : <input type="range" min="0" max="255" class="slider" value="0" id="redval" change="rbcolor()"/><br>
+        Green : <input type="range" min="0" max="255" class="slider" value="0" id="greenval" change="rbcolor()"/><br>
+        Blue : <input type="range" min="0" max="255" class="slider" value="0" id="blueval" change="rbcolor()"/>-->
         <p>Material Colors</p>
       </panecnt>
     </div>
@@ -81,9 +85,9 @@
 		<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
 	  </svg></button>
     </div>
-    <div class="main" ontouchmove="e.preventDefault()" ontouchstart="e.preventDefault()">
-      <canvas id="draw" onmousedown="down()" onmouseup="up()" onmousemove="move(event)"
-      ontouchstart="down();e.preventDefault()" ontouchend="up()" ontouchmove="move(event);e.preventDefault()"></canvas>
+    <div class="main" id="man" ontouchmove="event.preventDefault()" ontouchstart="event.preventDefault()">
+      <canvas id="draw" onmousedown="down(event,'m')" onmouseup="up()" onmousemove="move(event,'m')"
+      ontouchstart="down(event);event.preventDefault()" ontouchend="up()" ontouchmove="move(event);event.preventDefault()"></canvas>
     </div>
 	<div id="snackbar">Saving..</div>
   </body>
