@@ -6,6 +6,8 @@ var selectedSize = 2;
 var acts = [];
 var actlg = [];
 var as = 0;
+var cusw = document.getElementById("cusw");
+var cush = document.getElementById("cush");
 var colors = ["#F44336","#E91E63","#9C27B0","#673AB7","#3F51B5","#2196F3","#03A9F4","#00BCD4"
               ,"#009688","#4CAF50","#8BC34A","#CDDC39","#FFEB3B","#FFC107","#FF9800","#FF5722"
               ,"#9E9E9E","#607D8B"]
@@ -13,6 +15,8 @@ draw.width = window.innerWidth * 3;
 draw.height = window.innerHeight * 3;
 draw.style.width = window.innerWidth + "px";
 draw.style.height = window.innerHeight + "px";
+cusw.value = window.innerWidth;
+cush.value = window.innerHeight;
 ctx.fillStyle = "white";
 ctx.fillRect(0, 0, draw.width, draw.height);
 ctx.fillStyle = document.getElementById("dcolor").value;
@@ -68,7 +72,7 @@ function move(e,type) {
   oldx = tchx * 3;
   oldy = tchy * 3
 }
-async function undo() {
+function undo() {
   ctx.clearRect(0, 0, draw.width, draw.height);
 	ctx.fillStyle = "white";
 	ctx.fillRect(0, 0, draw.width, draw.height);
@@ -94,6 +98,13 @@ async function undo() {
   }
   ctx.lineWidth = selectedSize * 3
 }
+if (localStorage.getItem("imagedata") !== null) {
+  console.log("saved image found")
+  //load the image
+  var imgdat = JSON.parse(localStorage.getItem("imagedata"));
+  imgdat.push([])
+  undo()
+}
 function setSize() {
   draw.width = window.innerWidth * 3;
 	draw.height = window.innerHeight * 3;
@@ -101,7 +112,21 @@ function setSize() {
 	draw.style.height = window.innerHeight + "px";
 	clearAll();
   ctx.lineWidth = selectedSize * 3;
+  cusw.value = window.innerWidth;
+  cush.value = window.innerHeight;
 }
+function setCustomSize() {
+  draw.width = cusw.value * 3;
+	draw.height = cush.value * 3;
+	draw.style.width = cusw.value + "px";
+	draw.style.height = cush.value + "px";
+	clearAll();
+  ctx.lineWidth = selectedSize * 3;
+}
+function autosave() {
+  localStorage.setItem("imagedata",JSON.stringify(acts))
+}
+setInterval(autosave,10000)
 function save() {
 	let canvasUrl = draw.toDataURL("image/jpeg", 0.5);
 	console.log(canvasUrl);
@@ -271,3 +296,12 @@ hidepane();
 //  document.getElementById("dcolor").value = rgbToHex(red,green,blue)
 //  return rgbToHex(red,green,blue)
 //}
+setTimeout(function() {
+  document.getElementById("rbar").style.transition = "background 0.5s,color 0.5s";
+  document.getElementById("rpane").style.transition = "background 0.5s,color 0.5s";
+  document.getElementById("title").style.transition = "background 0.5s,color 0.5s";
+  const nodeList = document.querySelectorAll("svg,p");
+  for (let i = 0; i < nodeList.length; i++) {
+    nodeList[i].style.transition = "color 0.5s";
+  }
+},100)
