@@ -54,7 +54,7 @@ function move(e,type) {
   if (isdrawing) {
     ctx.fillStyle = document.getElementById("dcolor").value;
     ctx.strokeStyle = document.getElementById("dcolor").value;
-    console.log(document.getElementById("dcolor").value)
+    //console.log(document.getElementById("dcolor").value)
     ctx.beginPath();
     ctx.arc(tchx * 3,tchy * 3,ctx.lineWidth / 2,0,2*Math.PI,false);
     ctx.fill();
@@ -73,29 +73,33 @@ function move(e,type) {
   oldy = tchy * 3
 }
 function undo() {
-  ctx.clearRect(0, 0, draw.width, draw.height);
-	ctx.fillStyle = "white";
-	ctx.fillRect(0, 0, draw.width, draw.height);
-	ctx.fillStyle = "black";
   acts.splice(acts.length - 1,1);
-  actlg.splice(acts.length - 1,1);
-  for (let i = 0; i < acts.length; i++) {
-    ctx.fillStyle = acts[i][1];
-    ctx.strokeStyle = acts[i][1];
-    ctx.lineWidth = acts[i][2]
-    if (acts[i][0] === 0) {
-      ctx.beginPath();
-      ctx.arc(acts[i][5],acts[i][6],acts[i][2] / 2,0,2*Math.PI,false);
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(acts[i][3],acts[i][4] ,acts[i][2] / 2,0,2*Math.PI,false);
-      ctx.fill();
-  	  ctx.beginPath();
-  	  ctx.moveTo(acts[i][3], acts[i][4]);
-  	  ctx.lineTo(acts[i][5], acts[i][6]);
-  	  ctx.stroke();
+  //actlg.splice(acts.length - 1,1);
+  draw.style.filter = "blur 8px";
+  setTimeout(function() {
+    ctx.clearRect(0, 0, draw.width, draw.height);
+  	ctx.fillStyle = "white";
+  	ctx.fillRect(0, 0, draw.width, draw.height);
+  	ctx.fillStyle = "black";
+    for (let i = 0; i < acts.length; i++) {
+      ctx.fillStyle = acts[i][1];
+      ctx.strokeStyle = acts[i][1];
+      ctx.lineWidth = acts[i][2]
+      if (acts[i][0] === 0) {
+        ctx.beginPath();
+        ctx.arc(acts[i][5],acts[i][6],acts[i][2] / 2,0,2*Math.PI,false);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(acts[i][3],acts[i][4] ,acts[i][2] / 2,0,2*Math.PI,false);
+        ctx.fill();
+    	  ctx.beginPath();
+    	  ctx.moveTo(acts[i][3], acts[i][4]);
+    	  ctx.lineTo(acts[i][5], acts[i][6]);
+    	  ctx.stroke();
+      }
     }
-  }
+  },1)
+  draw.style.filter = "";
   ctx.lineWidth = selectedSize * 3
 }
 if (localStorage.getItem("imagedata") !== null) {
@@ -103,7 +107,15 @@ if (localStorage.getItem("imagedata") !== null) {
   //load the image
   var imgdat = JSON.parse(localStorage.getItem("imagedata"));
   imgdat.push([])
-  undo()
+  acts = imgdat;
+  //set draw(canvas) size to save size
+  if (localStorage.getItem("imagewid") !== null) {
+	draw.width = localStorage.getItem("imagewid");
+	draw.height = localStorage.getItem("imageheg");
+	draw.style.width = (localStorage.getItem("imagewid") / 3) + "px";
+	draw.style.height = (localStorage.getItem("imageheg") / 3) + "px";
+  }
+  setTimeout(function() {undo();selectedSize = 2;ctx.lineWidth = selectedSize * 3},100)
 }
 function setSize() {
   draw.width = window.innerWidth * 3;
@@ -125,8 +137,14 @@ function setCustomSize() {
 }
 function autosave() {
   localStorage.setItem("imagedata",JSON.stringify(acts))
+  localStorage.setItem("imagewid",draw.width)
+  localStorage.setItem("imageheg",draw.height)
+  var x = document.getElementById("snackbar");
+	x.className = "show";
+  x.innerHTML = "Auto Saving..";
+	setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 }
-setInterval(autosave,10000)
+setInterval(autosave,60000)
 function save() {
 	let canvasUrl = draw.toDataURL("image/jpeg", 0.5);
 	console.log(canvasUrl);
@@ -137,6 +155,7 @@ function save() {
 	createEl.remove();
 	var x = document.getElementById("snackbar");
 	x.className = "show";
+  x.innerHTML = "Saving Current Image..";
 	setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 }
 function clearAll() {
@@ -178,7 +197,7 @@ for (let i = 1; i < 201; i++) {
   btn.style.width = "100%";
   btn.id = "btnsize" + i;
   btn.onclick = function () {
-    togleheg("sz","200px");
+    togleheg('sz','40%')
     ctx.lineWidth = i * 3;
     const nodeList = document.getElementById("sz").querySelectorAll("button");
 		for (let i = 0; i < nodeList.length; i++) {
@@ -201,7 +220,7 @@ for (let i = 1; i < 201; i++) {
   }
   document.getElementById("sz").appendChild(btn)
 }
-async function themeInit() {
+function themeInit() {
 	var nightButton = document.getElementById("nghmd")
 	if (localStorage.getItem("night") === "on") {
 		nightButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-fill" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>';
@@ -276,7 +295,7 @@ function addcolor(i,clrlist) {
   button.style.borderRadius = "5px"
   button.innerHTML = "<div style='display:inline-block;padding:3px;border-radius:5px;background-color:" + clrlist[i] + "'>" + clrlist[i] + "</div>"
   button.onclick = function() {
-    document.getElementById("dcolor").value = clrlist[i]
+    document.getElementById("dcolor").value = clrlist[i];
   };
   document.getElementById("pane_clrlist").appendChild(button)
 }
@@ -300,6 +319,7 @@ setTimeout(function() {
   document.getElementById("rbar").style.transition = "background 0.5s,color 0.5s";
   document.getElementById("rpane").style.transition = "background 0.5s,color 0.5s";
   document.getElementById("title").style.transition = "background 0.5s,color 0.5s";
+  document.body.style.transition = "background 0.5s,color 0.5s";
   const nodeList = document.querySelectorAll("svg,p");
   for (let i = 0; i < nodeList.length; i++) {
     nodeList[i].style.transition = "color 0.5s";
