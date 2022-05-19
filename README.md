@@ -9,3 +9,5 @@ To launch it as an desktop app, you need electronJS: Run `npm install --save-dev
 You may ask why i didnt made this setup: my pc is not windows 10. so i cant 
 
 This app uses bootstrap icons
+
+![resim](https://user-images.githubusercontent.com/103432992/169301969-b9216c46-b886-4f97-bf79-e0af9610f391.png)
